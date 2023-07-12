@@ -2,7 +2,6 @@
   "name": "node-typescript-boilerplate",
   "version": "0.0.0",
   "description": "Minimalistic boilerplate to quick-start Node.js development in TypeScript.",
-  "type": "module",
   "engines": {
     "node": "20"
   },
@@ -12,12 +11,14 @@
     "@typescript-eslint/parser": "^5.59",
     "eslint": "^8.38",
     "eslint-config-prettier": "^8.8",
+    "fastify": "^4.19.2",
     "prettier": "^2.8",
     "rimraf": "^5.0",
+    "ts-node": "^10.9.1",
     "typescript": "^5.0"
   },
   "scripts": {
-    "start": "node build/src/main.js",
+    "start": "ts-node ./src/index.ts",
     "prestart:": "npm run build",
     "clean": "rimraf coverage build tmp",
     "prebuild": "npm run lint",
@@ -27,5 +28,8 @@
     "prettier": "prettier --config .prettierrc --write ."
   },
   "author": "Anderson Joseph <andersonjoseph@mailfence.com>",
-  "license": "Apache-2.0"
+  "license": "MIT",
+  "dependencies": {
+    "hashids": "^2.3.0"
+  }
 }
