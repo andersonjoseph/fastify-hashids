@@ -7,6 +7,7 @@
   },
   "devDependencies": {
     "@types/node": "20",
+    "@types/tap": "^15.0.8",
     "@typescript-eslint/eslint-plugin": "^5.59",
     "@typescript-eslint/parser": "^5.59",
     "eslint": "^8.38",
@@ -14,6 +15,7 @@
     "fastify": "^4.19.2",
     "prettier": "^2.8",
     "rimraf": "^5.0",
+    "tap": "^16.3.7",
     "ts-node": "^10.9.1",
     "typescript": "^5.0"
   },
@@ -25,7 +27,8 @@
     "build": "tsc -p tsconfig.json",
     "build:watch": "tsc -w -p tsconfig.json",
     "lint": "eslint . --ext .ts --ext .mts",
-    "prettier": "prettier --config .prettierrc --write ."
+    "prettier": "prettier --config .prettierrc --write .",
+    "test": "tap --ts"
   },
   "author": "Anderson Joseph <andersonjoseph@mailfence.com>",
   "license": "MIT",
