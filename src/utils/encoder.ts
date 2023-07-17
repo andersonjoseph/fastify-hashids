@@ -40,7 +40,7 @@ export class Encoder {
       if (utils.isObject(value)) {
         outputArray.push(this.encodeObject(value));
       } else if (utils.isArray(value)) {
-        outputArray.push(...this.encodeArray(value));
+        outputArray.push(this.encodeArray(value));
       } else {
         outputArray.push(value);
       }
