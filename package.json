@@ -30,6 +30,7 @@
   "author": "Anderson Joseph <andersonjoseph@mailfence.com>",
   "license": "MIT",
   "dependencies": {
+    "fastify-plugin": "^4.5.0",
     "hashids": "^2.3.0"
   }
 }

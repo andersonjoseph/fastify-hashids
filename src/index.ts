@@ -6,6 +6,7 @@ import {
   preSerializationHookHandler,
   preValidationHookHandler,
 } from 'fastify';
+import fastifyPlugin from 'fastify-plugin';
 import Hashids from 'hashids';
 import utils from './utils';
 
@@ -100,4 +101,4 @@ function plugin(
   done();
 }
 
-export default plugin;
+export default fastifyPlugin(plugin);
