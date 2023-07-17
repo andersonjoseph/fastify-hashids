@@ -10,6 +10,12 @@ import fastifyPlugin from 'fastify-plugin';
 import Hashids from 'hashids';
 import utils from './utils';
 
+declare module 'fastify' {
+  interface FastifyInstance {
+    hashids: Hashids;
+  }
+}
+
 export type HashidsPluginOptions = {
   hashidsOptions?: {
     salt?: string;
@@ -31,6 +37,8 @@ function plugin(
     options.hashidsOptions?.alphabet,
     options.hashidsOptions?.seps,
   );
+
+  fastify.decorate('hashids', hashids);
 
   const idRegexp =
     options.hashidsOptions?.idRegex || /^(id|ID|Id|\w+(id|ID|Id))$/;
