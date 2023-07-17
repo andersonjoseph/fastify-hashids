@@ -23,4 +23,20 @@ export class Decoder {
 
     return outputObject;
   }
+
+  decodeArray(arr: unknown[]): unknown[] {
+    const outputArray: Array<unknown> = [];
+
+    for (const value of arr) {
+      if (utils.isObject(value)) {
+        outputArray.push(this.decodeObject(value));
+      } else if (utils.isArray(value)) {
+        outputArray.push(this.decodeArray(value));
+      } else {
+        outputArray.push(value);
+      }
+    }
+
+    return outputArray;
+  }
 }
