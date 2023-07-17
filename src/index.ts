@@ -46,53 +46,49 @@ function plugin(
   const encoder = new utils.Encoder({ idRegexp, hashids });
   const decoder = new utils.Decoder({ idRegexp, hashids });
 
+  const decodableRequestProperties = ['params', 'query', 'body'] as const;
+
   function encodePayloadHook(
     _: FastifyRequest,
     __: FastifyReply,
     payload: unknown,
     done: (err?: Error | null, payload?: unknown) => void,
   ): void {
-    const encodedPayload = encoder.encodePayload(payload);
+    if (utils.isObject(payload)) {
+      return done(null, encoder.encodeObject(payload));
+    }
 
-    done(null, encodedPayload);
+    if (utils.isArray(payload)) {
+      return done(null, encoder.encodeArray(payload));
+    }
+
+    done(null, payload);
   }
 
-  function decodeParamsHook(
-    request: FastifyRequest,
-    _: FastifyReply,
-    done: (err?: Error) => void,
-  ): void {
-    if (!utils.isObject(request.params)) {
-      return done();
-    }
-    const decodedParams = decoder.decodeObject(request.params);
+  function createRequestDecoderHook(
+    property: typeof decodableRequestProperties[number],
+  ): preValidationHookHandler {
+    return (request, _, done) => {
+      const input = request[property];
 
-    request.params = decodedParams;
+      if (utils.isObject(input)) {
+        request[property] = decoder.decodeObject(input);
+      }
 
-    done();
-  }
-
-  function decodeBodyHook(
-    request: FastifyRequest,
-    _: FastifyReply,
-    done: (err?: Error) => void,
-  ): void {
-    if (!utils.isObject(request.body)) {
-      return done();
-    }
-    const decodedBody = decoder.decodeObject(request.body);
-
-    request.body = decodedBody;
-    done();
+      done();
+    };
   }
 
   fastify.addHook('onRoute', (routeOptions) => {
+    const requestDecoderHooks = decodableRequestProperties.map((value) =>
+      createRequestDecoderHook(value),
+    );
+
     const existingPreValidationHooks =
       (routeOptions.preValidation as preValidationHookHandler[]) || [];
 
     routeOptions.preValidation = [
-      decodeParamsHook,
-      decodeBodyHook,
+      ...requestDecoderHooks,
       ...existingPreValidationHooks,
     ];
 
