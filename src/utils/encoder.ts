@@ -9,10 +9,6 @@ type EncoderOptions = {
 export class Encoder {
   constructor(private readonly options: EncoderOptions) {}
 
-  encodeString(str: string): string {
-    return this.options.hashids.encode(String(str));
-  }
-
   encodeObject(obj: Record<string, unknown>): Record<string, unknown> {
     const outputObject: Record<string, unknown> = JSON.parse(
       JSON.stringify(obj),
@@ -51,13 +47,5 @@ export class Encoder {
     }
 
     return outputArray;
-  }
-
-  encodePayload(payload: unknown): unknown {
-    if (utils.isArray(payload)) return this.encodeArray(payload);
-
-    if (utils.isObject(payload)) return this.encodeObject(payload);
-
-    return this.encodeString(String(payload));
   }
 }

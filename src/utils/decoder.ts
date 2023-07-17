@@ -8,10 +8,6 @@ type DecoderOptions = {
 export class Decoder {
   constructor(private readonly options: DecoderOptions) {}
 
-  decodeString(str: string): number | bigint {
-    return this.options.hashids.decode(str)[0] || -1;
-  }
-
   decodeObject(obj: Record<string, unknown>): Record<string, unknown> {
     const outputObject: Record<string, unknown> = JSON.parse(
       JSON.stringify(obj),
