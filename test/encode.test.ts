@@ -139,7 +139,7 @@ test('encode arrray of objects', async (t) => {
   }
 });
 
-test('enocde single object', async (t) => {
+test('encode single object', async (t) => {
   t.plan(idKeys.length * 2);
 
   for (const key of idKeys) {
