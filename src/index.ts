@@ -8,6 +8,7 @@ import {
 } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 import Hashids from 'hashids';
+import { InvalidIdError } from './errors';
 import utils from './utils';
 import { IdChecker } from './utils/id-checker';
 
@@ -80,7 +81,11 @@ function plugin(
       const input = request[property];
 
       if (utils.isObject(input)) {
-        request[property] = decoder.decodeObject(input);
+        try {
+          request[property] = decoder.decodeObject(input);
+        } catch (err) {
+          throw new InvalidIdError();
+        }
       }
 
       done();

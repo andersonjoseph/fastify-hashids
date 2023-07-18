@@ -329,3 +329,29 @@ test('decode array of ids', async (t) => {
     fastify.close();
   }
 });
+
+test('Bad ID returns status 400', async (t) => {
+  t.plan(2);
+
+  const fastify = Fastify();
+  await fastify.register(plugin);
+
+  fastify.get('/:id', () => {
+    return true;
+  });
+
+  const response = await fastify.inject({
+    method: 'GET',
+    url: `/1!`,
+  });
+
+  t.equal(response.statusCode, 400);
+  t.same(JSON.parse(response.body), {
+    statusCode: 400,
+    code: 'FST_HASHIDS_INVALID_ID',
+    error: 'Bad Request',
+    message: 'The provided ID is invalid',
+  });
+
+  await fastify.close();
+});
