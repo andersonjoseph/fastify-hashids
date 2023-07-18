@@ -166,6 +166,35 @@ test('encode single object', async (t) => {
   }
 });
 
+test('disableHashids===true does not encode the ids', async (t) => {
+  t.plan(idKeys.length * 2);
+
+  for (const key of idKeys) {
+    const fastify = Fastify();
+    await fastify.register(plugin);
+
+    const id = randomId();
+
+    fastify.get('/', { config: { disableHashids: true } }, () => ({
+      [key]: id,
+      original: id,
+    }));
+
+    const response = await fastify.inject({
+      method: 'GET',
+      url: `/`,
+    });
+
+    t.equal(response.statusCode, 200);
+    t.same(JSON.parse(response.body), {
+      [key]: id,
+      original: id,
+    });
+
+    fastify.close();
+  }
+});
+
 test('encode array of ids', async (t) => {
   t.plan(idsKeys.length * 2);
 

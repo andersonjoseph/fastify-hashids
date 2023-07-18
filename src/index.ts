@@ -14,6 +14,10 @@ declare module 'fastify' {
   interface FastifyInstance {
     hashids: Hashids;
   }
+
+  interface FastifyContextConfig {
+    disableHashids?: boolean;
+  }
 }
 
 export type HashidsPluginOptions = {
@@ -80,6 +84,10 @@ function plugin(
   }
 
   fastify.addHook('onRoute', (routeOptions) => {
+    if (routeOptions.config?.disableHashids) {
+      return;
+    }
+
     const requestDecoderHooks = decodableRequestProperties.map((value) =>
       createRequestDecoderHook(value),
     );
