@@ -41,7 +41,7 @@ function plugin(
   fastify.decorate('hashids', hashids);
 
   const idRegexp =
-    options.hashidsOptions?.idRegex || /^(id|ID|Id|\w+(id|ID|Id))$/;
+    options.hashidsOptions?.idRegex || /^\w*((id|iD)s?|(Id|Ids|ID(s|S)?))$/;
 
   const encoder = new utils.Encoder({ idRegexp, hashids });
   const decoder = new utils.Decoder({ idRegexp, hashids });
