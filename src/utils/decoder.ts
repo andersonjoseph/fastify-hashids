@@ -20,15 +20,20 @@ export class Decoder {
     for (const key of keys) {
       const currentValue = outputObject[key];
 
+      // disable-prettier
       if (utils.isObject(currentValue)) {
         outputObject[key] = this.decodeObject(currentValue);
-      } else if (utils.isArray(currentValue)) {
+      }
+      // disable-prettier
+      else if (utils.isArray(currentValue)) {
         outputObject[key] = this.options.idChecker.propertyIsId(key)
           ? this.decodeArrayOfIds(currentValue)
           : this.decodeArray(currentValue);
-      } else if (this.options.idChecker.propertyIsId(key)) {
+      }
+      // disable-prettier
+      else if (this.options.idChecker.propertyIsId(key)) {
         outputObject[key] = this.options.hashids.decode(
-          String(outputObject[key]),
+          String(currentValue),
         )[0];
       }
     }
@@ -37,13 +42,7 @@ export class Decoder {
   }
 
   decodeArrayOfIds(arr: unknown[]): unknown[] {
-    const outputArray: Array<unknown> = [];
-
-    for (const value of arr) {
-      outputArray.push(this.options.hashids.decode(String(value))[0]);
-    }
-
-    return outputArray;
+    return arr.map((value) => this.options.hashids.decode(String(value))[0]);
   }
 
   decodeArray(arr: unknown[]): unknown[] {

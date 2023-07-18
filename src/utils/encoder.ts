@@ -20,13 +20,18 @@ export class Encoder {
     for (const key of keys) {
       const currentValue = outputObject[key];
 
+      // disable-prettier
       if (utils.isObject(currentValue)) {
         outputObject[key] = this.encodeObject(currentValue);
-      } else if (utils.isArray(currentValue)) {
+      }
+      // disable-prettier
+      else if (utils.isArray(currentValue)) {
         outputObject[key] = this.options.idChecker.propertyIsId(key)
-          ? this.encodeArrayOfIds(currentValue)
-          : this.encodeArray(currentValue);
-      } else if (this.options.idChecker.propertyIsId(key)) {
+          ? (outputObject[key] = this.encodeArrayOfIds(currentValue))
+          : (outputObject[key] = this.encodeArray(currentValue));
+      }
+      // disable-prettier
+      else if (this.options.idChecker.propertyIsId(key)) {
         outputObject[key] = this.options.hashids.encode(String(currentValue));
       }
     }
@@ -35,13 +40,7 @@ export class Encoder {
   }
 
   encodeArrayOfIds(arr: unknown[]): unknown[] {
-    const outputArray: Array<unknown> = [];
-
-    for (const value of arr) {
-      outputArray.push(this.options.hashids.encode(String(value)));
-    }
-
-    return outputArray;
+    return arr.map((value) => this.options.hashids.encode(String(value)));
   }
 
   encodeArray(arr: unknown[]): unknown[] {
