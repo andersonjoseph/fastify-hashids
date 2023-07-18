@@ -19,18 +19,30 @@ export class Decoder {
     for (const key of keys) {
       const currentValue = outputObject[key];
 
-      if (this.options.idRegexp.test(key)) {
+      if (utils.isObject(currentValue)) {
+        outputObject[key] = this.decodeObject(currentValue);
+      } else if (utils.isArray(currentValue)) {
+        outputObject[key] = this.options.idRegexp.test(key)
+          ? this.decodeArrayOfIds(currentValue)
+          : this.decodeArray(currentValue);
+      } else if (this.options.idRegexp.test(key)) {
         outputObject[key] = this.options.hashids.decode(
           String(outputObject[key]),
         )[0];
-      } else if (utils.isObject(currentValue)) {
-        outputObject[key] = this.decodeObject(currentValue);
-      } else if (utils.isArray(currentValue)) {
-        outputObject[key] = this.decodeArray(currentValue);
       }
     }
 
     return outputObject;
+  }
+
+  decodeArrayOfIds(arr: unknown[]): unknown[] {
+    const outputArray: Array<unknown> = [];
+
+    for (const value of arr) {
+      outputArray.push(this.options.hashids.decode(String(value))[0]);
+    }
+
+    return outputArray;
   }
 
   decodeArray(arr: unknown[]): unknown[] {

@@ -22,15 +22,25 @@ export class Encoder {
       if (utils.isObject(currentValue)) {
         outputObject[key] = this.encodeObject(currentValue);
       } else if (utils.isArray(currentValue)) {
-        outputObject[key] = this.encodeArray(currentValue);
+        outputObject[key] = this.options.idRegexp.test(key)
+          ? this.encodeArrayOfIds(currentValue)
+          : this.encodeArray(currentValue);
       } else if (this.options.idRegexp.test(key)) {
-        outputObject[key] = this.options.hashids.encode(
-          String(outputObject[key]),
-        );
+        outputObject[key] = this.options.hashids.encode(String(currentValue));
       }
     }
 
     return outputObject;
+  }
+
+  encodeArrayOfIds(arr: unknown[]): unknown[] {
+    const outputArray: Array<unknown> = [];
+
+    for (const value of arr) {
+      outputArray.push(this.options.hashids.encode(String(value)));
+    }
+
+    return outputArray;
   }
 
   encodeArray(arr: unknown[]): unknown[] {

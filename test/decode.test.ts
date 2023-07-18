@@ -1,5 +1,5 @@
 import { test } from 'tap';
-import { idKeys, randomId } from './utils';
+import { idKeys, idsKeys, randomId, randomIds } from './utils';
 import Fastify, { FastifyRequest } from 'fastify';
 import plugin from '../src/';
 
@@ -291,5 +291,41 @@ test('decode ids in array of objects', async (t) => {
     t.equal(JSON.parse(response.body).result, id);
 
     await fastify.close();
+  }
+});
+
+test('decode array of ids', async (t) => {
+  t.plan(idsKeys.length * 2);
+
+  for (const key of idsKeys) {
+    const fastify = Fastify();
+    await fastify.register(plugin);
+
+    const ids = randomIds();
+    const encodedIds = ids.map((id) => fastify.hashids.encode(id));
+
+    fastify.post(
+      `/`,
+      (
+        request: FastifyRequest<{
+          Body: { [K in typeof key]: Record<typeof key, number>[] };
+        }>,
+      ) => ({
+        result: request.body[key],
+      }),
+    );
+
+    const response = await fastify.inject({
+      method: 'POST',
+      url: `/`,
+      body: {
+        [key]: encodedIds,
+      },
+    });
+
+    t.equal(response.statusCode, 200);
+    t.same(JSON.parse(response.body).result, ids);
+
+    fastify.close();
   }
 });
