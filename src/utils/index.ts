@@ -1,5 +1,6 @@
 import { Encoder } from './encoder';
 import { Decoder } from './decoder';
+import { IdChecker } from './id-checker';
 
 function isObject(value: unknown): value is Record<string, unknown> {
   return Object.prototype.toString.call(value) === '[object Object]';
@@ -14,4 +15,5 @@ export default {
   isArray,
   Encoder,
   Decoder,
+  IdChecker,
 };

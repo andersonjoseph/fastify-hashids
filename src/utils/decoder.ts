@@ -1,9 +1,10 @@
 import Hashids from 'hashids';
+import { IdChecker } from './id-checker';
 import utils from './index';
 
 type DecoderOptions = {
   readonly hashids: Hashids;
-  readonly idRegexp: RegExp;
+  readonly idChecker: IdChecker;
 };
 
 export class Decoder {
@@ -22,10 +23,10 @@ export class Decoder {
       if (utils.isObject(currentValue)) {
         outputObject[key] = this.decodeObject(currentValue);
       } else if (utils.isArray(currentValue)) {
-        outputObject[key] = this.options.idRegexp.test(key)
+        outputObject[key] = this.options.idChecker.propertyIsId(key)
           ? this.decodeArrayOfIds(currentValue)
           : this.decodeArray(currentValue);
-      } else if (this.options.idRegexp.test(key)) {
+      } else if (this.options.idChecker.propertyIsId(key)) {
         outputObject[key] = this.options.hashids.decode(
           String(outputObject[key]),
         )[0];

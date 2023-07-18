@@ -9,6 +9,7 @@ import {
 import fastifyPlugin from 'fastify-plugin';
 import Hashids from 'hashids';
 import utils from './utils';
+import { IdChecker } from './utils/id-checker';
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -26,7 +27,8 @@ export type HashidsPluginOptions = {
     minLength?: number;
     alphabet?: string;
     seps?: string;
-    idRegex?: RegExp;
+    idRegexp?: RegExp | null;
+    propertyList?: string[];
   };
 };
 
@@ -44,11 +46,13 @@ function plugin(
 
   fastify.decorate('hashids', hashids);
 
-  const idRegexp =
-    options.hashidsOptions?.idRegex || /^\w*((id|iD)s?|(Id|Ids|ID(s|S)?))$/;
+  const idChecker = new IdChecker({
+    idRegexp: options.hashidsOptions?.idRegexp,
+    propertyList: options.hashidsOptions?.propertyList,
+  });
 
-  const encoder = new utils.Encoder({ idRegexp, hashids });
-  const decoder = new utils.Decoder({ idRegexp, hashids });
+  const encoder = new utils.Encoder({ idChecker, hashids });
+  const decoder = new utils.Decoder({ idChecker, hashids });
 
   const decodableRequestProperties = ['params', 'query', 'body'] as const;
 
