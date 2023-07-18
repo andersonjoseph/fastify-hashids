@@ -1,6 +1,6 @@
 {
   "name": "fastify-hashids",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Easily encode and decode data with Hashids in Fastify routes.",
   "main": "./build/src/index.js",
   "types": "./build/src/index.d.ts",
@@ -24,7 +24,7 @@
     "lint": "eslint . --ext .ts --ext .mts",
     "prettier": "prettier --config .prettierrc --write .",
     "test": "tap --ts ./test/**/*.test.ts",
-    "prepare": "npm run clean && npm run build"
+    "prepare": "npm run clean && npm run build && npm run test"
   },
   "repository": {
     "type": "git",
