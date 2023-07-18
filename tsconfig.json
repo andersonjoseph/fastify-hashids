@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
+    "declaration": true,
     "target": "es2022",
-    "module": "node16",
+    "module": "commonjs",
     "lib": ["ES2022"],
     "moduleResolution": "node16",
     "rootDir": ".",
@@ -20,5 +21,6 @@
     "strictNullChecks": true,
     "strict": true
   },
-  "include": ["src/**/*", "test/**/*"]
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["./build/**/*"]
 }

@@ -33,7 +33,7 @@ export type HashidsPluginOptions = {
   };
 };
 
-function plugin(
+export default function plugin(
   fastify: FastifyInstance,
   options: FastifyPluginOptions & HashidsPluginOptions,
   done: (err?: Error) => void,
@@ -122,4 +122,5 @@ function plugin(
   done();
 }
 
-export default fastifyPlugin(plugin);
+module.exports = fastifyPlugin(plugin);
+module.exports.default = fastifyPlugin(plugin);

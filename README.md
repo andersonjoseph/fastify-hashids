@@ -52,13 +52,17 @@ The plugin accepts the following options:
 You can disable the Hashids functionality for specific routes by adding the `disableHashids` property to the route's configuration object:
 
 ```typescript
-app.get('/api/sensitive-data', {
-  config: {
-    disableHashids: true,
+app.get(
+  '/api/sensitive-data',
+  {
+    config: {
+      disableHashids: true,
+    },
   },
-}, async (req, reply) => {
-  // ... handle route without Hashids encoding
-});
+  async (req, reply) => {
+    // ... handle route without Hashids encoding
+  },
+);
 ```
 
 ## License

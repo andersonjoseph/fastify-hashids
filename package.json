@@ -1,10 +1,9 @@
 {
-  "name": "node-typescript-boilerplate",
-  "version": "0.0.0",
-  "description": "Minimalistic boilerplate to quick-start Node.js development in TypeScript.",
-  "engines": {
-    "node": "20"
-  },
+  "name": "fastify-hashids",
+  "version": "0.0.1",
+  "description": "Easily encode and decode data with Hashids in Fastify routes.",
+  "main": "./build/src/index.js",
+  "types": "./build/src/index.d.ts",
   "devDependencies": {
     "@types/node": "20",
     "@types/tap": "^15.0.8",
@@ -20,21 +19,25 @@
     "typescript": "^5.0"
   },
   "scripts": {
-    "start": "ts-node ./src/index.ts",
-    "prestart:": "npm run build",
     "clean": "rimraf coverage build tmp",
-    "prebuild": "npm run lint",
     "build": "tsc -p tsconfig.json",
-    "build:watch": "tsc -w -p tsconfig.json",
     "lint": "eslint . --ext .ts --ext .mts",
     "prettier": "prettier --config .prettierrc --write .",
     "test": "tap --ts"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hateablestream/fastify-hashids"
+  },
+  "homepage": "https://github.com/hateablestream/fastify-hashids",
   "author": "Anderson Joseph <andersonjoseph@mailfence.com>",
   "license": "MIT",
   "dependencies": {
     "@fastify/error": "^3.3.0",
     "fastify-plugin": "^4.5.0",
     "hashids": "^2.3.0"
-  }
+  },
+  "files": [
+    "./build/src/"
+  ]
 }
