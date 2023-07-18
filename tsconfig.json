@@ -8,6 +8,7 @@
     "rootDir": ".",
     "outDir": "build",
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "importHelpers": true,
     "alwaysStrict": true,
     "sourceMap": true,
