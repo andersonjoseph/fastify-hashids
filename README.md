@@ -1,6 +1,7 @@
 # Fastify Hashids Plugin
 
-[![License](https://img.shields.io/github/license/hateablestream/fastify-hashids)](https://github.com/hateablestream/fastify-hashids/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/andersonjoseph/fastify-hashids)](https://github.com/andersonjoseph/fastify-hashids/blob/main/LICENSE)
+[![npm version](https://badge.fury.io/js/fastify-hashids.svg)](https://badge.fury.io/js/fastify-hashids)
 
 A Fastify plugin for integrating Hashids into your routes, providing an easy way to encode and decode data, particularly useful for obscuring database IDs.
 
@@ -18,7 +19,7 @@ import fastifyHashids from 'fastify-hashids';
 
 const app = fastify();
 
-app.register(fastifyHashids, {
+await app.register(fastifyHashids, {
   hashidsOptions: {
     salt: 'your-secret-salt',
     minLength: 8,
@@ -26,15 +27,28 @@ app.register(fastifyHashids, {
   },
 });
 
-// ... your route handlers
-
-app.listen(3000, (err) => {
-  if (err) {
-    console.error('Error starting server:', err);
-    process.exit(1);
-  }
-  console.log('Server is listening on port 3000');
+app.get('/', (request, reply) => {
+  const id = 123;
+  return {
+    encodedId: id,
+    idWithoutEncoding: id,
+  };
 });
+
+await fastify.listen({ port: 3000 });
+```
+
+```sh
+curl http://localhost:3000
+```
+
+the response will look like this:
+
+```sh
+{
+  "encodedId":"Mj3",
+  "idWithoutEncoding":123
+}
 ```
 
 ## Options
@@ -67,7 +81,7 @@ app.get(
 
 ## License
 
-This project is licensed under the [MIT License](https://github.com/hateablestream/fastify-hashids/blob/main/LICENSE).
+This project is licensed under the [MIT License](https://github.com/andersonjoseph/fastify-hashids/blob/main/LICENSE).
 
 ## Contributing
 
