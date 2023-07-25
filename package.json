@@ -1,6 +1,6 @@
 {
   "name": "fastify-hashids",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Easily encode and decode data with Hashids in Fastify routes.",
   "main": "./build/src/index.js",
   "types": "./build/src/index.d.ts",
@@ -28,9 +28,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hateablestream/fastify-hashids"
+    "url": "https://github.com/andersonjoseph/fastify-hashids"
   },
-  "homepage": "https://github.com/hateablestream/fastify-hashids",
+  "homepage": "https://github.com/andersonjoseph/fastify-hashids",
   "author": "Anderson Joseph <andersonjoseph@mailfence.com>",
   "license": "MIT",
   "dependencies": {
