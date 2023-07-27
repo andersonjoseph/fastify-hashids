@@ -1,6 +1,6 @@
 {
   "name": "fastify-hashids",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Easily encode and decode data with Hashids in Fastify routes.",
   "main": "./build/src/index.js",
   "types": "./build/src/index.d.ts",
