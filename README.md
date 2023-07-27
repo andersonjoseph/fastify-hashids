@@ -2,6 +2,7 @@
 
 [![License](https://img.shields.io/github/license/andersonjoseph/fastify-hashids)](https://github.com/andersonjoseph/fastify-hashids/blob/main/LICENSE)
 [![npm version](https://badge.fury.io/js/fastify-hashids.svg)](https://badge.fury.io/js/fastify-hashids)
+[![ci](https://github.com/andersonjoseph/fastify-hashids/actions/workflows/node.js.yml/badge.svg)](https://github.com/andersonjoseph/fastify-hashids/actions/workflows/node.js.yml)
 
 A Fastify plugin for integrating Hashids into your routes, providing an easy way to encode and decode data, particularly useful for obscuring database IDs.
 
