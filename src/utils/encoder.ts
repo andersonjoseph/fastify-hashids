@@ -11,9 +11,7 @@ export class Encoder {
   constructor(private readonly options: EncoderOptions) {}
 
   encodeObject(obj: Record<string, unknown>): Record<string, unknown> {
-    const outputObject: Record<string, unknown> = JSON.parse(
-      JSON.stringify(obj),
-    );
+    const outputObject: Record<string, unknown> = structuredClone(obj);
 
     const keys = Object.keys(outputObject);
 
