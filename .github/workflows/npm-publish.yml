@@ -2,36 +2,25 @@
 # For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
 
 name: publish
-permissions:
-  contents: read
   
 on:
   release:
     types: [created]
+    
+  workflow_dispatch:
 
 jobs:
-  build:
+  publish-npm:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
-      - run: npm i
-      - run: npm run build
-      - run: npm test
-
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
+          node-version: 18.x
           registry-url: https://registry.npmjs.org/
-      - run: npm ci
+      - run: npm i
+      - run: npm run prepare
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
