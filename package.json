@@ -24,7 +24,7 @@
     "lint": "eslint . --ext .ts --ext .mts",
     "prettier": "prettier --config .prettierrc --write .",
     "test": "tap --ts ./test/**/*.test.ts",
-    "prepare": "npm run clean && npm run build && npm run test"
+    "prepublish": "npm run clean && npm run build && npm run test"
   },
   "repository": {
     "type": "git",
