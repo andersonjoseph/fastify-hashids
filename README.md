@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/fastify-hashids.svg)](https://badge.fury.io/js/fastify-hashids)
 [![ci](https://github.com/andersonjoseph/fastify-hashids/actions/workflows/node.js.yml/badge.svg)](https://github.com/andersonjoseph/fastify-hashids/actions/workflows/node.js.yml)
 
-A Fastify plugin for integrating Hashids into your routes, providing an easy way to encode and decode data, particularly useful for obscuring database IDs.
+A Fastify plugin for integrating [Hashids](https://github.com/niieani/hashids.js) into your routes, providing an easy way to encode and decode data, particularly useful for obscuring database IDs.
 
 ## Installation
 
@@ -54,13 +54,16 @@ the response will look like this:
 
 ## Options
 
-The plugin accepts the following options:
+The `hashidsOptions` object is an optional object that can be passed to the `Hashids` constructor to customize the behavior of the hashids library.
 
-- `hashidsOptions`: An object with options to configure the Hashids instance. These options are passed directly to the Hashids constructor. Available options include `salt`, `minLength`, `alphabet`, and `seps`. You can find more options in the [hashids.js repo](https://github.com/niieani/hashids.js).
+The following properties are supported:
 
-- `hashidsOptions.idRegexp`: A regular expression that `fastify-hashids` uses to automatically identify properties as IDs. By default, it matches variations of "id, ids, ID, userID," etc. You can customize this regex to match your specific property names. Pass `null` to disable the regex-based property identification.
-
-- `hashidsOptions.propertyList`: An array of property names to include in the hashing process. Properties listed here will be considered for encoding with Hashids, in addition to those identified by the `idRegexp`.
+- `salt`: A string that is used to randomize the hashids.
+- `minLength`: The minimum length of the hashids.
+- `alphabet`: A string that contains the characters that can be used in the hashids. The default value is "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".
+- `seps`: The `seps` option is a string that contains the characters that should not be placed next to each other in the hashids. The default value is "cfhistu". This option is used to avoid generating hashids that could be interpreted as curse words in English.
+- `idRegexp`: A regular expression that fastify-hashids uses to automatically identify properties as IDs. By default, it matches variations of "id, ids, ID, userID," etc. You can customize this regex to match your specific property names. Pass null to disable the regex-based property identification.
+- `propertyList`: An array of property names to include in the hashing process. Properties listed here will be considered for encoding with Hashids, in addition to those identified by the idRegexp.
 
 ## Route-Level Configuration
 
@@ -78,6 +81,22 @@ app.get(
     // ... handle route without Hashids encoding
   },
 );
+```
+
+## Accessing the Hashids Instance
+
+When the `fastify-hashids` plugin is registered, the `fastify` instance is decorated with a `hashids` instance. This means that you can access the `hashids` instance directly from the `fastify` instance.
+
+For example, the following code would encode the number 12345 using the `hashids` instance:
+
+```typescript
+import fastify from 'fastify';
+import hashids from 'fastify-hashids';
+
+await fastify.register(hashids);
+
+const hash = fastify.hashids.encode(12345);
+const id = fastify.hashids.decode(hash);
 ```
 
 ## License
