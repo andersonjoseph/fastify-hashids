@@ -75,7 +75,7 @@ export default function plugin(
   }
 
   function createRequestDecoderHook(
-    property: typeof decodableRequestProperties[number],
+    property: (typeof decodableRequestProperties)[number],
   ): preValidationHookHandler {
     return (request, _, done) => {
       const input = request[property];
