@@ -20,8 +20,6 @@ test('non-ids array should not be encoded', async (t) => {
 
   t.equal(response.statusCode, 200);
   t.equal(JSON.parse(response.body)[0], id);
-
-  await fastify.close();
 });
 
 test('encode Ids in matrices of objects', async (t) => {
@@ -45,8 +43,6 @@ test('encode Ids in matrices of objects', async (t) => {
 
     t.equal(response.statusCode, 200);
     t.equal(JSON.parse(response.body).users[0][0][key], encodedId);
-
-    await fastify.close();
   }
 });
 
@@ -75,8 +71,6 @@ test('encode Ids in array of objects', async (t) => {
 
     t.equal(response.statusCode, 200);
     t.equal(JSON.parse(response.body).users[0][key], encodedId);
-
-    await fastify.close();
   }
 });
 
@@ -105,8 +99,6 @@ test('encode nested Ids', async (t) => {
 
     t.equal(response.statusCode, 200);
     t.equal(JSON.parse(response.body).user.topFollower[key], encodedId);
-
-    await fastify.close();
   }
 });
 
@@ -134,8 +126,6 @@ test('encode arrray of objects', async (t) => {
         original: id,
       },
     ]);
-
-    fastify.close();
   }
 });
 
@@ -161,8 +151,6 @@ test('encode single object', async (t) => {
       [key]: encodedId,
       original: id,
     });
-
-    fastify.close();
   }
 });
 
@@ -190,8 +178,6 @@ test('disableHashids===true does not encode the ids', async (t) => {
       [key]: id,
       original: id,
     });
-
-    fastify.close();
   }
 });
 
@@ -217,7 +203,5 @@ test('encode array of ids', async (t) => {
       [key]: encodedIds,
       original: ids,
     });
-
-    fastify.close();
   }
 });

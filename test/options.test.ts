@@ -31,8 +31,6 @@ test('passing a custom regex', async (t) => {
     user: encodedId,
     id: id,
   });
-
-  await fastify.close();
 });
 
 test('passing a properyList with regexp enabled', async (t) => {
@@ -63,8 +61,6 @@ test('passing a properyList with regexp enabled', async (t) => {
     user: encodedId,
     id: encodedId,
   });
-
-  await fastify.close();
 });
 
 test('passing a properyList with regexp disabled', async (t) => {
@@ -96,6 +92,4 @@ test('passing a properyList with regexp disabled', async (t) => {
     user: encodedId,
     id: id,
   });
-
-  await fastify.close();
 });

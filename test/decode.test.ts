@@ -37,8 +37,6 @@ test('decode properties in request', (t) => {
 
       t.equal(response.statusCode, 200);
       t.equal(JSON.parse(response.body).result, id);
-
-      await fastify.close();
     }
   });
 
@@ -64,8 +62,6 @@ test('decode properties in request', (t) => {
 
       t.equal(response.statusCode, 200);
       t.equal(JSON.parse(response.body).result, id);
-
-      await fastify.close();
     }
   });
 
@@ -91,8 +87,6 @@ test('decode properties in request', (t) => {
 
       t.equal(response.statusCode, 200);
       t.equal(JSON.parse(response.body).result, id);
-
-      await fastify.close();
     }
   });
 });
@@ -119,8 +113,6 @@ test('non ids properties are not decoded', async (t) => {
 
   t.equal(response.statusCode, 200);
   t.equal(JSON.parse(response.body).result, 'ander');
-
-  await fastify.close();
 });
 
 test('decode nested Ids', async (t) => {
@@ -158,8 +150,6 @@ test('decode nested Ids', async (t) => {
 
     t.equal(response.statusCode, 200);
     t.equal(JSON.parse(response.body).result, id);
-
-    await fastify.close();
   }
 });
 
@@ -178,8 +168,6 @@ test('values that are not ids are not decoded', async (t) => {
 
   t.equal(response.statusCode, 200);
   t.equal(JSON.parse(response.body), 200);
-
-  await fastify.close();
 });
 
 test('values that are not ids in an array are not decoded', async (t) => {
@@ -208,8 +196,6 @@ test('values that are not ids in an array are not decoded', async (t) => {
 
   t.equal(response.statusCode, 200);
   t.equal(JSON.parse(response.body).result, encodedId);
-
-  await fastify.close();
 });
 
 test('decode ids in matrices of objects', async (t) => {
@@ -249,8 +235,6 @@ test('decode ids in matrices of objects', async (t) => {
 
     t.equal(response.statusCode, 200);
     t.equal(JSON.parse(response.body).result, id);
-
-    await fastify.close();
   }
 });
 
@@ -289,8 +273,6 @@ test('decode ids in array of objects', async (t) => {
 
     t.equal(response.statusCode, 200);
     t.equal(JSON.parse(response.body).result, id);
-
-    await fastify.close();
   }
 });
 
@@ -325,8 +307,6 @@ test('decode array of ids', async (t) => {
 
     t.equal(response.statusCode, 200);
     t.same(JSON.parse(response.body).result, ids);
-
-    fastify.close();
   }
 });
 
@@ -352,6 +332,4 @@ test('Bad ID returns status 400', async (t) => {
     error: 'Bad Request',
     message: 'The provided ID is invalid',
   });
-
-  await fastify.close();
 });
